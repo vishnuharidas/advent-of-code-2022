@@ -1,6 +1,6 @@
 package day01
 
-import java.io.File
+import getFileLines
 
 // https://adventofcode.com/2022/day/1
 
@@ -11,7 +11,7 @@ fun main() {
 
     var sums = mutableListOf<Int>()
 
-    File("files/day01/input.txt").readLines().forEach {
+    getFileLines("day01/input.txt").forEach {
 
         if (it.isEmpty()) { // Empty line? Next Elf.
 
