@@ -20,7 +20,8 @@ fun main() {
         val selectionScore = when (me) {
             'R' -> 1    // Rock
             'P' -> 2    // Paper
-            else -> 3   // Scissor
+            'S' -> 3    // Scissor
+            else -> error("Invalid shape")
         }
 
         val outcomeScore = when {
@@ -38,16 +39,20 @@ fun main() {
 
     fun parse(line: String): Pair<Char?, Char?> {
 
-        // To make it easy, map A/B/C/X/Y/Z to R/P/S
-        val codes = mapOf(
-            'A' to 'R', 'B' to 'P', 'C' to 'S',
-            'X' to 'R', 'Y' to 'P', 'Z' to 'S'
-        )
-
         val chars = line.split(" ")
             .map { it.first() }
+            .map {
 
-        return Pair(codes[chars[0]], codes[chars[1]])
+                // To make it easy, map A/B/C/X/Y/Z to R/P/S
+                when (it) {
+                    'A', 'X' -> 'R'
+                    'B', 'Y' -> 'P'
+                    'C', 'Z' -> 'S'
+                    else -> error("Invalid shape: $it")
+                }
+            }
+
+        return Pair(chars[0], chars[1])
     }
 
     fun parseWithRule(line: String): Pair<Char?, Char?> {
@@ -69,7 +74,8 @@ fun main() {
         return when (round.second) {
             'R' -> Pair(round.first, loserOf[round.first])      // R: Ensure lose
             'S' -> Pair(round.first, winnerOf[round.first])     // S: Ensure win
-            else -> Pair(round.first, round.first)              // P: Ensure draw
+            'P' -> Pair(round.first, round.first)               // P: Ensure draw
+            else -> error("Invalid shape ${round.second}")
         }
 
     }
