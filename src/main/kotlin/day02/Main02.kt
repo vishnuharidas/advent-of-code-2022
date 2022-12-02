@@ -54,21 +54,21 @@ fun main() {
 
         val round = parse(line)
 
-        val canLoseWith = mapOf(
+        val loserOf = mapOf(
             'R' to 'S',
             'P' to 'R',
             'S' to 'P'
         )
 
-        val canWithWith = mapOf(
+        val winnerOf = mapOf(
             'R' to 'P',
             'P' to 'S',
             'S' to 'R'
         )
 
         return when (round.second) {
-            'R' -> Pair(round.first, canLoseWith[round.first])  // R: Ensure lose
-            'S' -> Pair(round.first, canWithWith[round.first])  // S: Ensure win
+            'R' -> Pair(round.first, loserOf[round.first])      // R: Ensure lose
+            'S' -> Pair(round.first, winnerOf[round.first])     // S: Ensure win
             else -> Pair(round.first, round.first)              // P: Ensure draw
         }
 
