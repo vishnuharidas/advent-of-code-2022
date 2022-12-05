@@ -1,6 +1,7 @@
 package day05
 
 import getFileText
+import java.util.*
 
 data class Command(
     val fromStack: Int,
@@ -10,11 +11,33 @@ data class Command(
 
 fun main() {
 
-    /*fun getInitialStack(fullText: String): ElvesStack {
+    // FIXME parse actual stack from the input
+    fun getInitialStack(fullText: String): List<Stack<Char>> {
 
-        val stackSeq = fullText.split("\n\n")[0]
+        val stacks = listOf(
+            Stack<Char>(),
+            Stack<Char>(),
+            Stack<Char>()
+        )
 
-    }*/
+        stacks[0].apply {
+            push('Z')
+            push('N')
+        }
+
+        stacks[1].apply {
+            push('M')
+            push('C')
+            push('D')
+        }
+
+        stacks[2].apply {
+            push('P')
+        }
+
+        return stacks
+
+    }
 
     fun getCommands(fullText: String): List<Command> {
 
@@ -45,6 +68,27 @@ fun main() {
         val commands = getCommands(fullText)
 
         println("Commands: $commands")
+
+        val stacks = getInitialStack(fullText)
+
+        commands.forEach {
+
+            val from = it.fromStack - 1
+            val to = it.toStack - 1
+            val qty = it.quantity
+
+            repeat(qty) {
+                stacks[to].push(stacks[from].pop())
+            }
+
+        }
+
+        // Check the stack after processing all commands
+        val top = stacks
+            .map { it.pop() }
+            .joinToString("")
+
+        println("Top crates: $top")
 
     }
 
