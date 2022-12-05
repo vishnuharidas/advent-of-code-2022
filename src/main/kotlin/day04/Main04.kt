@@ -36,7 +36,7 @@ fun main() {
             }
             .count {
 
-                it.first.toList().intersect(it.second.toList().toSet()).isNotEmpty()
+                (it.first intersect it.second).isNotEmpty()
 
             }
 
