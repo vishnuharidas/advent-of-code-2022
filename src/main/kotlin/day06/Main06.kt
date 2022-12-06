@@ -30,9 +30,17 @@ fun main() {
 
     }
 
+    fun processWindowed(message: String, distinctSize: Int = 4): Int {
+
+        return distinctSize + message
+            .windowed(distinctSize, 1)
+            .indexOfFirst { it.toSet().size == distinctSize }
+
+    }
+
     fun part1() {
 
-        val markerIndex = process(getFileText("day06/input.txt"))
+        val markerIndex = processWindowed(getFileText("day06/input.txt"))
 
         println("Marker index: $markerIndex")
 
@@ -40,7 +48,7 @@ fun main() {
 
     fun part2() {
 
-        val messageIndex = process(getFileText("day06/input.txt"), distinctSize = 14)
+        val messageIndex = processWindowed(getFileText("day06/input.txt"), distinctSize = 14)
 
         println("Message index: $messageIndex")
 
