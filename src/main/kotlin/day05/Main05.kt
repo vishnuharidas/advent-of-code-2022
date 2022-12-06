@@ -11,29 +11,36 @@ data class Command(
 
 fun main() {
 
-    // FIXME parse actual stack from the input
     fun getInitialStack(fullText: String): List<Stack<Char>> {
 
         val stacks = listOf(
             Stack<Char>(),
             Stack<Char>(),
-            Stack<Char>()
+            Stack<Char>(),
+            Stack<Char>(),
+            Stack<Char>(),
+            Stack<Char>(),
+            Stack<Char>(),
+            Stack<Char>(),
+            Stack<Char>(),
         )
 
-        stacks[0].apply {
-            push('Z')
-            push('N')
-        }
+        // Indices of characters in the input.txt file
+        val indices = listOf(1, 5, 9, 13, 17, 21, 25, 29, 33)
 
-        stacks[1].apply {
-            push('M')
-            push('C')
-            push('D')
-        }
+        fullText.split("\n\n")[0]
+            .lines()
+            .reversed()
+            .drop(1) // The numbers row
+            .forEach { line ->
 
-        stacks[2].apply {
-            push('P')
-        }
+                indices.forEachIndexed { index, i ->
+                    if (line.length > i && line[i].isLetter()) {
+                        stacks[index].push(line[i])
+                    }
+                }
+
+            }
 
         return stacks
 
@@ -63,11 +70,9 @@ fun main() {
 
     fun part1() {
 
-        val fullText = getFileText("day05/input_test.txt")
+        val fullText = getFileText("day05/input.txt")
 
         val commands = getCommands(fullText)
-
-        println("Commands: $commands")
 
         val stacks = getInitialStack(fullText)
 
@@ -85,6 +90,7 @@ fun main() {
 
         // Check the stack after processing all commands
         val top = stacks
+            .filterNot { it.isEmpty() }
             .map { it.pop() }
             .joinToString("")
 
