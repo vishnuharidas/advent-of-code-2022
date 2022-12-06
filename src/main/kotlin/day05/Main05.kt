@@ -98,6 +98,39 @@ fun main() {
 
     }
 
+    fun part2() {
+
+        val fullText = getFileText("day05/input.txt")
+
+        val commands = getCommands(fullText)
+
+        val stacks = getInitialStack(fullText)
+
+        commands.forEach {
+
+            val from = it.fromStack - 1
+            val to = it.toStack - 1
+            val qty = it.quantity
+
+            // Pop qty items, then reverse, then push to destination
+            (1..qty)
+                .map { stacks[from].pop() }
+                .reversed()
+                .map { char -> stacks[to].push(char) }
+
+        }
+
+        // Check the stack after processing all commands
+        val top = stacks
+            .filterNot { it.isEmpty() }
+            .map { it.pop() }
+            .joinToString("")
+
+        println("Top crates with the new CrateMover9001: $top")
+
+    }
+
     part1()
+    part2()
 
 }
