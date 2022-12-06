@@ -1,5 +1,7 @@
-mjqjpqmgbljsphdztnvjfqwrcgsmlb - 7th
-bvwbjplbgvbhsrlpgdmjqwftvncz - 5th
-nppdvjthqldpwncqszvftbrmjlhg - 6th
-nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg - 10th
-zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw - 11th
+// This file isn't the direct input - it contains expected answers as well.
+
+mjqjpqmgbljsphdztnvjfqwrcgsmlb - Marker: 7, Message: 19
+bvwbjplbgvbhsrlpgdmjqwftvncz - Marker: 5, Message: 23
+nppdvjthqldpwncqszvftbrmjlhg - Marker: 6, Message: 23
+nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg - Marker: 10, Message: 29
+zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw - Marker: 11, Message: 26
