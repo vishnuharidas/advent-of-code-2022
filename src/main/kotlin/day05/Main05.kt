@@ -51,19 +51,18 @@ fun main() {
         return fullText.split("\n\n")[1]
             .lines()
             .filterNot { it.trim().isEmpty() }
-            .map { it ->
-                it.replace("move ", "")
-                    .replace(" from ", ",")
-                    .replace(" to ", ",")
-                    .split(",")
-                    .map { n -> n.toInt() }
-            }
             .map {
+
+                // Format: "move 2 from 7 to 2"
+                // Indexes:   0  1   2  3  4 5
+                val command = it.split(" ")
+
                 Command(
-                    fromStack = it[1],
-                    toStack = it[2],
-                    quantity = it[0]
+                    fromStack = command[3].toInt(),
+                    toStack = command[5].toInt(),
+                    quantity = command[1].toInt()
                 )
+
             }
 
     }
