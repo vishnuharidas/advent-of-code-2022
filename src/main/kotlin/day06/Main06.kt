@@ -4,23 +4,21 @@ import getFileText
 
 fun main() {
 
-    fun process(message: String): Int {
-
-        val markerSize = 4
+    fun process(message: String, distinctSize: Int = 4): Int {
 
         val list = mutableListOf<Char>()
 
-        // Add first 4 characters, to avoid redundant `if(size==4)` check in the loop.
+        // Add first N characters, to avoid redundant `if(size==N)` check in the loop.
         list.addAll(
-            message.take(markerSize).toList()
+            message.take(distinctSize).toList()
         )
 
         message
-            .drop(markerSize) // These were already added
+            .drop(distinctSize) // These were already added
             .forEachIndexed { index, char ->
 
-                if (list.distinct().size == markerSize) {
-                    return index + markerSize
+                if (list.distinct().size == distinctSize) {
+                    return index + distinctSize
                 } else {
                     list.removeFirst()
                     list.add(char)
@@ -36,9 +34,18 @@ fun main() {
 
         val markerIndex = process(getFileText("day06/input.txt"))
 
-        println("Marker starts at: $markerIndex")
+        println("Marker index: $markerIndex")
+
+    }
+
+    fun part2() {
+
+        val messageIndex = process(getFileText("day06/input.txt"), distinctSize = 14)
+
+        println("Message index: $messageIndex")
 
     }
 
     part1()
+    part2()
 }
