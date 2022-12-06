@@ -91,7 +91,7 @@ fun main() {
         // Check the stack after processing all commands
         val top = stacks
             .filterNot { it.isEmpty() }
-            .map { it.pop() }
+            .map { it.peek() }
             .joinToString("")
 
         println("Top crates: $top")
@@ -123,7 +123,7 @@ fun main() {
         // Check the stack after processing all commands
         val top = stacks
             .filterNot { it.isEmpty() }
-            .map { it.pop() }
+            .map { it.peek() }
             .joinToString("")
 
         println("Top crates with the new CrateMover9001: $top")
