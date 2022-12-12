@@ -68,7 +68,7 @@ fun main() {
 
     }
 
-    fun part1() {
+    fun buildFileSystem(input: String): File {
 
         val root = File(
             name = "/",
@@ -78,7 +78,7 @@ fun main() {
 
         var current = root
 
-        val lines = getFileLines("day07/input.txt")
+        val lines = getFileLines(input)
 
         lines.forEach {
 
@@ -128,6 +128,14 @@ fun main() {
             }
 
         }
+
+        return root
+
+    }
+
+    fun part1() {
+
+        val root = buildFileSystem("day07/input.txt")
 
         // printFileTree(root, 0)
 
@@ -140,64 +148,7 @@ fun main() {
 
     fun part2() {
 
-        val root = File(
-            name = "/",
-            isDir = true,
-            files = mutableListOf(),
-        )
-
-        var current = root
-
-        val lines = getFileLines("day07/input.txt")
-
-        lines.forEach {
-
-            // Process command - move around dirs
-            if (it.startsWith("$")) {
-
-                val command = it.split(" ")[1]
-
-                if (command == "cd") {
-
-                    when (val path = it.split(" ")[2]) {
-
-                        // Move to root dir
-                        "/" -> {
-
-                            current = root
-
-                        }
-
-                        // Move to parent dir
-                        ".." -> {
-
-                            current
-                                .parent
-                                ?.let { parent ->
-                                    current = parent
-                                }
-                        }
-
-                        // Move to child dir
-                        else -> {
-
-                            current
-                                .files
-                                ?.find { file -> file.name == path }
-                                ?.let { file ->
-                                    current = file
-                                }
-                        }
-                    }
-                }
-
-            } else { // Process files and add to the current directory
-
-                current.files?.add(parseFile(it, current))
-
-            }
-
-        }
+        val root = buildFileSystem("day07/input.txt")
 
         //printFileTree(root, 0)
 
@@ -215,7 +166,7 @@ fun main() {
 
     }
 
-    //part1()
+    part1()
 
     part2()
 }
