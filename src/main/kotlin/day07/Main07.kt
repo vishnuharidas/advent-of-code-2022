@@ -45,6 +45,13 @@ fun main() {
 
     }
 
+    fun findAllDirs(root: File): List<File> {
+
+        root.files ?: return emptyList()
+
+        return root.files.filter { it.isDir } + root.files.map { findAllDirs(it) }.flatten()
+    }
+
     fun parseFile(line: String, parent: File): File {
 
         val tokens = line.split(" ")
@@ -131,5 +138,84 @@ fun main() {
 
     }
 
-    part1()
+    fun part2() {
+
+        val root = File(
+            name = "/",
+            isDir = true,
+            files = mutableListOf(),
+        )
+
+        var current = root
+
+        val lines = getFileLines("day07/input.txt")
+
+        lines.forEach {
+
+            // Process command - move around dirs
+            if (it.startsWith("$")) {
+
+                val command = it.split(" ")[1]
+
+                if (command == "cd") {
+
+                    when (val path = it.split(" ")[2]) {
+
+                        // Move to root dir
+                        "/" -> {
+
+                            current = root
+
+                        }
+
+                        // Move to parent dir
+                        ".." -> {
+
+                            current
+                                .parent
+                                ?.let { parent ->
+                                    current = parent
+                                }
+                        }
+
+                        // Move to child dir
+                        else -> {
+
+                            current
+                                .files
+                                ?.find { file -> file.name == path }
+                                ?.let { file ->
+                                    current = file
+                                }
+                        }
+                    }
+                }
+
+            } else { // Process files and add to the current directory
+
+                current.files?.add(parseFile(it, current))
+
+            }
+
+        }
+
+        //printFileTree(root, 0)
+
+        val allDirs = findAllDirs(root) + root
+
+        val totalDiskSize = 70_000_000L
+        val requiredSizeForUpdate = 30_000_000L
+
+        val availableSize = totalDiskSize - root.size
+        val extraNeeded = requiredSizeForUpdate - availableSize
+
+        val dirToDelete = allDirs.filter { it.size > extraNeeded }.minByOrNull { it.size }
+
+        println("Dir to delete: ${dirToDelete?.name}, size: ${dirToDelete?.size}")
+
+    }
+
+    //part1()
+
+    part2()
 }
