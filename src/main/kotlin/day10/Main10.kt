@@ -41,8 +41,6 @@ fun main() {
 
         val lines = getFileLines("day10/input.txt")
 
-        val sprite = "###........................................".map { it }.toMutableList()
-
         lines
             .map {
 
@@ -57,14 +55,10 @@ fun main() {
             .foldIndexed(1) { index, acc, item ->
 
                 val pixel = (acc % 40).absoluteValue.coerceIn(1..38)
-                sprite.replaceAll { '.' }
-                sprite[pixel - 1] = '#'
-                sprite[pixel] = '#'
-                sprite[pixel + 1] = '#'
 
                 if (index % 40 == 0) println()
 
-                print(sprite[index % 40])
+                print(if (index % 40 in pixel - 1..pixel + 1) "#" else " ")
 
                 acc + item
             }
