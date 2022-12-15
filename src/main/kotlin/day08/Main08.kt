@@ -46,6 +46,45 @@ fun main() {
             || isVisible(this.north, DIRECTION.NORTH)
             || isVisible(this.south, DIRECTION.SOUTH)
 
+    fun Tree.scenicScore(): Int {
+
+        var northScore = 0
+        var southScore = 0
+        var eastScore = 0
+        var westScore = 0
+
+        for (otherTree in this.north.reversed().drop(1)) {
+            northScore++
+            if (otherTree >= this.height) {
+                break
+            }
+        }
+
+        for (otherTree in this.south.drop(1)) {
+            southScore++
+            if (otherTree >= this.height) {
+                break
+            }
+        }
+
+        for (otherTree in this.east.reversed().drop(1)) {
+            eastScore++
+            if (otherTree >= this.height) {
+                break
+            }
+        }
+
+        for (otherTree in this.west.drop(1)) {
+            westScore++
+            if (otherTree >= this.height) {
+                break
+            }
+        }
+
+        return northScore * southScore * eastScore * westScore
+
+    }
+
     fun part1() {
 
         val lines = getFileLines("day08/input.txt")
@@ -71,6 +110,31 @@ fun main() {
 
     }
 
+    fun part2() {
+
+        val lines = getFileLines("day08/input.txt")
+
+        val trees = mutableListOf<Tree>()
+
+        val maxCol = lines[1].length
+        val maxRow = lines.size
+
+        repeat(maxCol) { x ->
+            repeat(maxRow) { y ->
+
+                trees.add(
+                    getTree(lines, x, y)
+                )
+
+            }
+        }
+
+        println("Highest scenic score: ${trees.maxOf { it.scenicScore() }}")
+
+    }
+
     part1()
+
+    part2()
 
 }
