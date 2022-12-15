@@ -111,18 +111,7 @@ fun main() {
 
     fun part2() {
 
-        var knots = listOf(
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0),
-            Point(0, 0)
-        )
+        var knots = List(10) { Point(0, 0) }
 
         val visits = mutableSetOf<Point>()
 
