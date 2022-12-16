@@ -1,10 +1,11 @@
 package day11
 
+import getFileText
 
 internal data class Monkey(
-    val list: MutableList<Int>,
-    val operation: (Int) -> Int,
-    val test: (Int) -> Boolean,
+    val list: MutableList<Long>,
+    val operation: (Long) -> Long,
+    val test: (Long) -> Boolean,
     val trueMonkey: Int,
     val falseMonkey: Int,
     var inspectionCount: Int = 0,
@@ -12,50 +13,55 @@ internal data class Monkey(
 
 fun main() {
 
-    fun part1() {
+    fun processMonkey(lines: List<String>): Monkey {
 
-        // TODO get monkeys from file
-        val monkeys = listOf(
+        val startingItems = lines[1]
+            .split(":")[1]
+            .split(",")
+            .filter { it.isNotEmpty() }
+            .map { it.trim().toLong() }
 
-            Monkey(
-                list = mutableListOf(79, 98),
-                operation = { it * 19 },
-                test = { it % 23 == 0 },
-                trueMonkey = 2,
-                falseMonkey = 3
-            ),
+        val divisibleBy = lines[3].split("divisible by")[1].trim().toLong()
 
-            Monkey(
-                list = mutableListOf(54, 65, 75, 74),
-                operation = { it + 6 },
-                test = { it % 19 == 0 },
-                trueMonkey = 2,
-                falseMonkey = 0
-            ),
+        val trueMonkey = lines[4].split("throw to monkey")[1].trim().toInt()
 
-            Monkey(
-                list = mutableListOf(79, 60, 97),
-                operation = { it * it },
-                test = { it % 13 == 0 },
-                trueMonkey = 1,
-                falseMonkey = 3
-            ),
+        val falseMonkey = lines[5].split("throw to monkey")[1].trim().toInt()
 
-            Monkey(
-                list = mutableListOf(74),
-                operation = { it + 3 },
-                test = { it % 17 == 0 },
-                trueMonkey = 0,
-                falseMonkey = 1
-            ),
+        val (op1, operation, op2) = lines[2]
+            .split(" ")
+            .map { it.trim() }
+            .takeLast(3)
+
+        val op = when (operation) {
+
+            "+" -> { i: Long -> (if (op1 == "old") i else op1.toLong()) + (if (op2 == "old") i else op2.toLong()) }
+            "*" -> { i: Long -> (if (op1 == "old") i else op1.toLong()) * (if (op2 == "old") i else op2.toLong()) }
+
+            else -> error("Invalid operation")
+
+        }
+
+        return Monkey(
+            list = startingItems.toMutableList(),
+            operation = op,
+            test = { it % divisibleBy == 0L },
+            trueMonkey = trueMonkey,
+            falseMonkey = falseMonkey
         )
 
-        /*println("Before starting")
-        monkeys.forEachIndexed { index, monkey ->
-            println("Monkey $index: ${monkey.list} Count: ${monkey.inspectionCount}")
-        }*/
+    }
 
-        repeat(20) { count ->
+    fun getMonkeys(path: String) = getFileText(path)
+        .split("\n\n")
+        .map { it.split("\n") }
+        .map { processMonkey(it) }
+
+
+    fun part1() {
+
+        val monkeys = getMonkeys("day11/input.txt")
+
+        repeat(20) {
 
             monkeys.forEach { monkey ->
 
@@ -77,18 +83,14 @@ fun main() {
 
             }
 
-            /*println("After Round: ${count + 1}")
-            monkeys.forEachIndexed { index, monkey ->
-                println("Monkey $index: ${monkey.list} Count: ${monkey.inspectionCount}")
-            }*/
 
         }
 
         val (i, j) = monkeys.map { it.inspectionCount }
-            .sorted()
+            .sorted().also { println(it) }
             .takeLast(2)
 
-        println("Monkey business after 20 rounds: ${i * j}")
+        println("Level of monkey business after 20 rounds: ${i * j}")
 
     }
 
