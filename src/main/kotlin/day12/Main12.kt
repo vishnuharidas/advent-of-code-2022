@@ -1,84 +1,8 @@
 package day12
 
 import getFileLines
-
-internal data class Matrix<T>(
-    val rows: Int,
-    val cols: Int,
-    val items: MutableList<MutableList<T>>
-) {
-
-    fun getItemAt(point: Point, default: T) =
-        items.getOrElse(point.row) { null }?.getOrElse(point.col) { null } ?: default
-
-    fun setItemAt(point: Point, char: T) {
-        try {
-            items.getOrElse(point.row) { null }?.set(point.col, char)
-        } catch (_: Exception) {
-        }
-
-    }
-
-    fun getItemPos(char: T): Point {
-
-        repeat(rows) { row ->
-            val col = items[row].indexOf(char)
-            if (col >= 0) {
-                return Point(row, col)
-            }
-        }
-
-        return Point(-1, -1)
-    }
-
-    fun getAllPositionsOf(char: T): List<Point> {
-
-        val list = mutableListOf<Point>()
-
-        repeat(rows) { row ->
-            items[row]
-                .withIndex()
-                .filter { it.value == char }
-                .map { Point(row, it.index) }
-                .forEach { list.add(it) }
-        }
-
-        return list
-    }
-
-    companion object {
-        fun from(lines: List<String>) = Matrix(
-            rows = lines.size,
-            cols = lines.first().length,
-            items = lines.map {
-                it.map { char -> char }.toMutableList()
-            }.toMutableList()
-        )
-    }
-
-}
-
-internal data class Point(
-    val row: Int,
-    val col: Int,
-) {
-
-    fun north() = Point(this.row - 1, this.col)
-    fun south() = Point(this.row + 1, this.col)
-    fun east() = Point(this.row, this.col + 1)
-    fun west() = Point(this.row, this.col - 1)
-
-    override fun equals(other: Any?): Boolean {
-        return (other as Point).row == this.row && other.col == this.col
-    }
-
-    override fun hashCode(): Int {
-        var result = row
-        result = 31 * result + col
-        return result
-    }
-
-}
+import util.Matrix
+import util.Point
 
 fun main() {
 
