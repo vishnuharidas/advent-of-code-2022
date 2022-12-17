@@ -34,8 +34,9 @@ fun main() {
             listOf(pt.east(), pt.west(), pt.south(), pt.north())
                 .filter { it.col in matrix.items[0].indices && it.row in matrix.items.indices }
                 .filter { !distanceMap.contains(it) }
-                // This is *THE* rule for neighbor that I misinterpreted. Spent 2 days on this and realized the mistake from Reddit: https://www.reddit.com/r/adventofcode/search/?q=day%2012
-                .filter { matrix.getItemAt(it, 'M') <= matrix.getItemAt(pt, 'W') + 1 }
+                // This is *THE* rule for neighbors that I misinterpreted - We can jump one level up, but any level down.
+                // Spent 2 days on this and realized the mistake from Reddit: https://www.reddit.com/r/adventofcode/search/?q=day%2012
+                .filter { matrix.getItemAt(it, 'Z') - matrix.getItemAt(pt, 'A') <= 1 }
                 .forEach {
                     distanceMap[it] = distanceMap[pt]!! + 1
                     queue.add(it)
