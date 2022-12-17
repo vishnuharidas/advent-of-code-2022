@@ -31,6 +31,21 @@ internal data class Matrix<T>(
         return Point(-1, -1)
     }
 
+    fun getAllPositionsOf(char: T): List<Point> {
+
+        val list = mutableListOf<Point>()
+
+        repeat(rows) { row ->
+            items[row]
+                .withIndex()
+                .filter { it.value == char }
+                .map { Point(row, it.index) }
+                .forEach { list.add(it) }
+        }
+
+        return list
+    }
+
     companion object {
         fun from(lines: List<String>) = Matrix(
             rows = lines.size,
@@ -67,7 +82,7 @@ internal data class Point(
 
 fun main() {
 
-    fun bfs(matrix: Matrix<Char>, startingPoint: Point, endingPoint: Point): Int {
+    fun bfs(matrix: Matrix<Char>, startingPoint: Point, endingPoint: Point): Int? {
 
         /* For visualization purpose
         val visited = Matrix(
@@ -111,7 +126,7 @@ fun main() {
         visited.items.forEach { println(it.joinToString("\t")) }
         */
 
-        return distanceMap[endingPoint]!!
+        return distanceMap[endingPoint]
 
     }
 
@@ -131,6 +146,25 @@ fun main() {
 
     }
 
+    fun part2() {
+
+        val matrix = Matrix.from(getFileLines("day12/input.txt"))
+
+        val endingPoint = matrix.getItemPos('E')
+
+        matrix.setItemAt(matrix.getItemPos('S'), 'a')
+        matrix.setItemAt(endingPoint, 'z')
+
+        val minDistance = matrix.getAllPositionsOf('a')
+            .mapNotNull { bfs(matrix, it, endingPoint) }
+            .min()
+
+        println("Minimum distance: $minDistance")
+
+    }
+
     part1()
+
+    part2()
 
 }
