@@ -1,6 +1,6 @@
 package day09
 
-import getFileLines
+import util.getFileLines
 import kotlin.math.absoluteValue
 
 internal data class Point(var x: Int, var y: Int) {

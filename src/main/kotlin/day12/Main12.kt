@@ -1,8 +1,8 @@
 package day12
 
-import getFileLines
 import util.Matrix
 import util.Point
+import util.getFileLines
 
 fun main() {
 

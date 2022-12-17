@@ -1,6 +1,6 @@
 package day08
 
-import getFileLines
+import util.getFileLines
 
 internal data class Tree(
     val height: Int,

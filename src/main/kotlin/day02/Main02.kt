@@ -1,6 +1,6 @@
 package day02
 
-import getFileLines
+import util.getFileLines
 
 // https://adventofcode.com/2022/day/2
 

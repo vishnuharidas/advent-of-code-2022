@@ -1,6 +1,6 @@
 package day05
 
-import getFileText
+import util.getFileText
 import java.util.*
 
 data class Command(

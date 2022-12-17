@@ -1,6 +1,6 @@
 package day10
 
-import getFileLines
+import util.getFileLines
 import kotlin.math.absoluteValue
 
 fun main() {

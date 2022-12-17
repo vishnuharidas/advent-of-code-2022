@@ -1,6 +1,6 @@
 package day04
 
-import getFileLines
+import util.getFileLines
 
 fun main() {
 

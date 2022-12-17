@@ -1,6 +1,6 @@
 package day06
 
-import getFileText
+import util.getFileText
 
 fun main() {
 

@@ -1,6 +1,6 @@
 package day11
 
-import getFileText
+import util.getFileText
 
 internal data class Monkey(
     val list: MutableList<Long>,

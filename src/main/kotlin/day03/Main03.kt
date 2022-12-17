@@ -1,6 +1,6 @@
 package day03
 
-import getFileLines
+import util.getFileLines
 
 // https://adventofcode.com/2022/day/3
 fun main() {

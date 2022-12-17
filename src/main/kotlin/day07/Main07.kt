@@ -1,6 +1,6 @@
 package day07
 
-import getFileLines
+import util.getFileLines
 
 
 internal data class File(
